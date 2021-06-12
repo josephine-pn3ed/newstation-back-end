@@ -46,3 +46,10 @@ export interface news {
     created_at: Date;
     updated_at: Date;
 }
+
+export interface Viewers {
+    id: ID;
+    news_id: ID;
+    employee_ID: ID;
+    date_viewed: Date;
+}
