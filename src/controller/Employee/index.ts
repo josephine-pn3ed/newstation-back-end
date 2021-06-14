@@ -1,25 +1,23 @@
-import { Payload, Id, Email, Password } from '../../model/Company/types';
-import { v4 as uuid_v4 } from 'uuid';
+import { Payload, Id, Email, Password } from '../../model/Employee/types';
 
-const Company = require('../../model/Company');
+const Employee = require('../../model/Employee');
 
 module.exports = {
-  getCompany: async (email: Email, password: Password) => {
+  getEmployee: async (email: Email, password: Password) => {
     try {
-      const data = await Company.getCompany("Companies", email);
-      if (data && (data.company_password === password)) {
+      const data = await Employee.getEmployee("Employees", email);
+      if (data && (data.employee_password === password)) {
         return true;
       } else throw Error;
     } catch (error) {
       return false;
     }
   },
-  insertCompany: async (payload: Payload) => {
+  insertEmployee: async (payload: Payload) => {
     try {
-      const data = await Company.insertCompany("Companies",
+      const data = await Employee.insertEmployee("Employees",
         {
           ...payload,
-          id: uuid_v4(),
           created_date: new Date().toISOString(),
           updated_date: new Date().toISOString(),
         });
@@ -30,9 +28,9 @@ module.exports = {
       return false;
     }
   },
-  updateCompany: async (id: Id, payload: Payload) => {
+  updateEmployee: async (id: Id, payload: Payload) => {
     try {
-      const data = await Company.updateCompany("Companies", {
+      const data = await Employee.updateEmployee("Employees", {
         ...payload,
         updated_date: new Date().toISOString(),
       });
@@ -44,9 +42,9 @@ module.exports = {
       return false;
     }
   },
-  deleteCompany: async (id: Id) => {
+  deleteEmployee: async (id: Id) => {
     try {
-      const data = await Company.deleteCompany("Companies", id, {
+      const data = await Employee.deleteEmployee("Employees", id, {
         status: "Inactive",
         updated_date: new Date().toISOString(),
       });
