@@ -1,11 +1,11 @@
 import { Payload, Id } from '../../model/News/types';
 
-const Company = require('../../model/Company');
+const News = require('../../model/News');
 
 module.exports = {
-    getNews: async (company_id: Id) => {
+    getNews: async (news_id: Id) => {
         try {
-            const data = await Company.getNews("News", company_id);
+            const data = await News.getNews("News", news_id);
             if (data) {
                 return true;
             } else throw Error;
@@ -15,7 +15,7 @@ module.exports = {
     },
     insertNews: async (payload: Payload) => {
         try {
-            const data = await Company.insertNews("News",
+            const data = await News.insertNews("News",
                 {
                     ...payload,
                     created_date: new Date().toISOString(),
@@ -30,7 +30,7 @@ module.exports = {
     },
     updateNews: async (id: Id, payload: Payload) => {
         try {
-            const data = await Company.updateNews("News", {
+            const data = await News.updateNews("News", {
                 ...payload,
                 updated_date: new Date().toISOString(),
             });
@@ -44,7 +44,7 @@ module.exports = {
     },
     deleteNews: async (id: Id) => {
         try {
-            const data = await Company.deleteEmployee("News", id, {
+            const data = await News.deleteEmployee("News", id, {
                 status: "Inactive",
                 updated_date: new Date().toISOString(),
             });
