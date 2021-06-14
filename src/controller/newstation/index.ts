@@ -18,7 +18,7 @@ module.exports = {
         try {
 
             let data = await showAllCompanies();
-
+            console.log(data);
             return data.length
                 ? { status: "Success! Data Retrieved.", data }
                 : "<center><h2>status: 🤕 ERROR RETRIEVING DATA: DATA NOT FOUND! </h2></center>";

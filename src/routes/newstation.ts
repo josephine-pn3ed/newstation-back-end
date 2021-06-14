@@ -2,6 +2,11 @@ import express = require('express')
 const route = express.Router();
 const { getAllEmployees, getAllCompanies, putEmployee, deleteEmployee, updatePayloadEmployee, postNews, displayNews } = require('../controller/newstation');
 
+route.get('/', async (req: express.Request, res: express.Response) => {
+    res.status(404).send(`<center><h1> 💀 Please Try Again. HTTP ERROR 404! <br> 😔 PAGE DOES NOT EXIST!!!! </h1></center>`);
+})
+
+
 route.get('/EmployeeList/:id', async (req: express.Request, res: express.Response) => {
     try {
         const { id } = req.params;
@@ -19,7 +24,7 @@ route.get('/CompanyList', async (req: express.Request, res: express.Response) =>
     try {
         console.log("Accessed READ route");
         const data = await getAllCompanies();
-        console.log(data)
+
         return data ? res.status(200).send(data) : { status: "ERROR!" }
 
     } catch (error) {
