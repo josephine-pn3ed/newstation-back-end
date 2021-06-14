@@ -1,4 +1,4 @@
-import { companyPayload, employeePayload, ID, Table } from './types'
+import { employeePayload, ID, Table, News } from './types'
 const db = require('../../db');
 
 module.exports = {
@@ -6,17 +6,35 @@ module.exports = {
         const data = await db.table("Employees").filter({ company_id: company_id, status: "active" }).run();
         return data;
     },
-    showAllCompanies: async (company_id: ID) => {
-        const data = await db.table("Companies").filter({ company_id: company_id }).run();
+    showAllCompanies: async () => {
+        const data = await db.table("Companies").filter({ status: "active" }).run();
         return data;
     },
-    enrolCompany: async (payload: companyPayload) => {
-        const data = await db.table("Companies").insert(payload).run();
-        return data;
-    },
-    enrolEmployee: async (company_id: ID, payload: employeePayload) => {
+    // enrolCompany: async (payload: companyPayload) => {
+    //     const data = await db.table("Companies").insert(payload).run();
+    //     return data;
+    // },
+    enrolEmployee: async (payload: employeePayload) => {
         const data = await db.table("Employees").insert(payload).run();
         return data;
     },
+    unenrolEmployee: async (table: Table, id: ID) => {
+        const data = await db.table('Employees').filter({ id: id, status: "active" }).update({ status: "inactive" }).run();
+        return data;
+    },
+    updateEmployee: async (id: ID, payload: employeePayload) => {
+        const data = await db.table('Employees').filter({ id: id, status: "active" }).update(payload).run();
+        return data;
+    },
+    addNews: async (payload: News) => {
+        const data = await db.table("Tables").insert(payload).run();
+        return data;
+    },
+    readNews: async (company_id: ID) => {
+        const data = await db.table("News").filter({ company_id: company_id, status: "active" }).run();
+        return data;
+    },
+
+
 
 };

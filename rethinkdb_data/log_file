@@ -52,3 +52,27 @@
 2021-06-12T07:59:28.119801410 91.328536s info: Table cd78a719-5965-41cf-8cf0-f487fa97fcb1: Starting a new Raft election for term 1.
 2021-06-12T07:59:28.119896056 91.328630s info: Table cd78a719-5965-41cf-8cf0-f487fa97fcb1: Added replica on this server.
 2021-06-12T07:59:28.121359755 91.330094s info: Table cd78a719-5965-41cf-8cf0-f487fa97fcb1: This server is Raft leader for term 1. Latest log index is 0.
+2021-06-15T00:33:56.659518577 0.029599s notice: Running rethinkdb 2.4.1~0focal (CLANG 10.0.0 )...
+2021-06-15T00:33:56.661532068 0.031607s notice: Running on Linux 5.11.0-7614-generic x86_64
+2021-06-15T00:33:56.661571786 0.031646s notice: Loading data from directory /home/dna-user/Documents/Newstation_ProposalApp/newstation-backend/rethinkdb_data
+2021-06-15T00:33:56.675675742 0.045750s info: Automatically using cache size of 6259 MB
+2021-06-15T00:33:56.679416427 0.049491s notice: Listening for intracluster connections on port 29015
+2021-06-15T00:33:56.715521641 0.085596s notice: Listening for client driver connections on port 28015
+2021-06-15T00:33:56.715560518 0.085635s notice: Listening for administrative HTTP connections on port 8080
+2021-06-15T00:33:56.715562418 0.085636s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2021-06-15T00:33:56.715564044 0.085638s notice: Listening on driver addresses: 127.0.0.1, ::1
+2021-06-15T00:33:56.715575277 0.085649s notice: Listening on http addresses: 127.0.0.1, ::1
+2021-06-15T00:33:56.715576961 0.085651s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2021-06-15T00:33:56.715578705 0.085653s notice: Server ready, "pop_os_ood" 3ade702c-7991-4b96-b107-eaf992c57e24
+2021-06-15T00:33:57.851508596 1.221583s info: Table 70e5d1d0-909c-4eb4-8e7e-bf49a5ccb3b4: Starting a new Raft election for term 3.
+2021-06-15T00:33:57.854164090 1.224239s info: Table 70e5d1d0-909c-4eb4-8e7e-bf49a5ccb3b4: This server is Raft leader for term 3. Latest log index is 5.
+2021-06-15T00:33:57.873608307 1.243683s info: Table c8af6e33-52e3-490a-ba9a-fd63e5b64442: Starting a new Raft election for term 2.
+2021-06-15T00:33:57.876350839 1.246426s info: Table c8af6e33-52e3-490a-ba9a-fd63e5b64442: This server is Raft leader for term 2. Latest log index is 2.
+2021-06-15T00:33:58.077929446 1.448004s info: Table cd78a719-5965-41cf-8cf0-f487fa97fcb1: Starting a new Raft election for term 2.
+2021-06-15T00:33:58.079538860 1.449613s info: Table cd78a719-5965-41cf-8cf0-f487fa97fcb1: This server is Raft leader for term 2. Latest log index is 2.
+2021-06-15T00:33:58.305558247 1.675632s info: Table d9871add-f24e-4430-992b-ca69c0ec9dd0: Starting a new Raft election for term 2.
+2021-06-15T00:33:58.307239202 1.677313s info: Table d9871add-f24e-4430-992b-ca69c0ec9dd0: This server is Raft leader for term 2. Latest log index is 2.
+2021-06-15T00:33:58.390435246 1.760510s info: Table 98f6249c-aac6-4d7d-99e0-f7c24c4987da: Starting a new Raft election for term 2.
+2021-06-15T00:33:58.393122768 1.763198s info: Table 98f6249c-aac6-4d7d-99e0-f7c24c4987da: This server is Raft leader for term 2. Latest log index is 2.
+2021-06-15T00:33:58.678915786 2.048990s info: Table 77ca8294-e080-4041-a31d-bb1cd958fd71: Starting a new Raft election for term 3.
+2021-06-15T00:33:58.681066488 2.051141s info: Table 77ca8294-e080-4041-a31d-bb1cd958fd71: This server is Raft leader for term 3. Latest log index is 5.

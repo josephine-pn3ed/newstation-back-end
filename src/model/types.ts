@@ -36,7 +36,7 @@ export interface employeePayload {
     updated_at: Date;
 }
 
-export interface news {
+export interface News {
     id: ID;
     company_id: ID;
     news_topic: string;
