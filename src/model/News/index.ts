@@ -4,7 +4,7 @@ const db = require('../../../db');
 
 module.exports = {
     getNews: async (table: Table, company_id: Id) => {
-        const data = await db.table(table, company_id).run();
+        const data = await db.table(table).get(company_id).run();
         return data;
     },
     insertNews: async (table: Table, payload: Payload) => {
