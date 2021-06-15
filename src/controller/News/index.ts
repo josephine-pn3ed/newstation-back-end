@@ -3,11 +3,12 @@ import { Payload, Id, Table } from '../../model/News/types';
 const News = require('../../model/News');
 
 module.exports = {
-    getNews: async (table: Table, news_id: Id) => {
+    getNews: async (id: Id) => {
         try {
-            const data = await News.getNews("News", news_id);
+            console.log("controller")
+            const data = await News.getNews("News", id);
             if (data) {
-                return true;
+                return data;
             } else throw Error;
         } catch (error) {
             return false;
@@ -18,8 +19,8 @@ module.exports = {
             const data = await News.insertNews("News",
                 {
                     ...payload,
-                    created_date: new Date().toISOString(),
-                    updated_date: new Date().toISOString(),
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString(),
                 });
             if (data) {
                 return data;
@@ -30,9 +31,9 @@ module.exports = {
     },
     updateNews: async (id: Id, payload: Payload) => {
         try {
-            const data = await News.updateNews("News", {
+            const data = await News.updateNews("News", id, {
                 ...payload,
-                updated_date: new Date().toISOString(),
+                updated_at: new Date().toISOString(),
             });
             if (data) {
                 return data;
@@ -44,9 +45,10 @@ module.exports = {
     },
     deleteNews: async (id: Id) => {
         try {
-            const data = await News.deleteEmployee("News", id, {
-                status: "Inactive",
-                updated_date: new Date().toISOString(),
+
+            const data = await News.deleteNews("News", id, {
+                news_status: "Inactive",
+                updated_at: new Date().toISOString(),
             });
             if (data) {
                 return data;

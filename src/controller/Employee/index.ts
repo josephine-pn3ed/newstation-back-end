@@ -18,8 +18,8 @@ module.exports = {
       const data = await Employee.insertEmployee("Employees",
         {
           ...payload,
-          created_date: new Date().toISOString(),
-          updated_date: new Date().toISOString(),
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
         });
       if (data) {
         return data;
@@ -30,9 +30,9 @@ module.exports = {
   },
   updateEmployee: async (id: Id, payload: Payload) => {
     try {
-      const data = await Employee.updateEmployee("Employees", {
+      const data = await Employee.updateEmployee("Employees", id, {
         ...payload,
-        updated_date: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       });
       if (data) {
         return data;
@@ -45,8 +45,8 @@ module.exports = {
   deleteEmployee: async (id: Id) => {
     try {
       const data = await Employee.deleteEmployee("Employees", id, {
-        status: "Inactive",
-        updated_date: new Date().toISOString(),
+        employee_status: "Inactive",
+        updated_at: new Date().toISOString(),
       });
       if (data) {
         return data;

@@ -20,8 +20,8 @@ module.exports = {
         {
           ...payload,
           id: uuid_v4(),
-          created_date: new Date().toISOString(),
-          updated_date: new Date().toISOString(),
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
         });
       if (data) {
         return data;
@@ -32,9 +32,9 @@ module.exports = {
   },
   updateCompany: async (id: Id, payload: Payload) => {
     try {
-      const data = await Company.updateCompany("Companies", {
+      const data = await Company.updateCompany("Companies", id, {
         ...payload,
-        updated_date: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       });
       if (data) {
         return data;
@@ -47,8 +47,8 @@ module.exports = {
   deleteCompany: async (id: Id) => {
     try {
       const data = await Company.deleteCompany("Companies", id, {
-        status: "Inactive",
-        updated_date: new Date().toISOString(),
+        company_status: "Inactive",
+        updated_at: new Date().toISOString(),
       });
       if (data) {
         return data;
