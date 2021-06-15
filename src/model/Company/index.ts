@@ -7,7 +7,7 @@ module.exports = {
     const data = await db.table(table).get(id).run();
     return data;
   },
-  loginCompany: async (table: Table, email: Email) => {
+  getCompanyByEmail: async (table: Table, email: Email) => {
     const data = await db.table(table).filter({ "company_email_address": email }).run();
     return data;
   },

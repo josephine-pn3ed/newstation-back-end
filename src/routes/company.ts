@@ -10,7 +10,7 @@ route.get('/company', async (req: express.Request, res: express.Response) => {
 
 route.post('/company', async (req: express.Request, res: express.Response) => {
   const result = await insertCompany(req.body);
-  return result ? res.send({ "success": true }) : res.send({ "success": false })
+  return result ? res.send({ "success": true , "message": result.message}) : res.send({ "success": false })
 })
 
 route.post('/company/login', async (req: express.Request, res: express.Response) => {
