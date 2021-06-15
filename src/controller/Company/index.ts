@@ -18,11 +18,13 @@ module.exports = {
     try {
       const { company_email_address, company_password } = payload;
       const data = await getCompanyByEmail("Companies", company_email_address);
-      if (data && (data[0].company_password === company_password)) {
-        return data;
+      if (data) {
+        if (data[0].company_password === company_password) {
+          return {"message": "Login successfully."};
+        } else return {"message": "Wrong password."}
       } else throw Error;
     } catch (error) {
-      return false;
+      return {"message": "Invalid credentials!"};
     }
   },
   insertCompany: async (payload: Payload) => {
@@ -41,9 +43,7 @@ module.exports = {
         if (data) {
           return { "message": data };
         } else throw Error;
-      } else {
-        return { "message": "Email address has already been taken." };
-      }
+      } else return { "message": "Email address has already been taken." };
     } catch (error) {
       return false;
     }
