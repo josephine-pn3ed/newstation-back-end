@@ -1,9 +1,9 @@
-import { Payload, Id } from '../../model/News/types';
+import { Payload, Id, Table } from '../../model/News/types';
 
 const News = require('../../model/News');
 
 module.exports = {
-    getNews: async (news_id: Id) => {
+    getNews: async (table: Table, news_id: Id) => {
         try {
             const data = await News.getNews("News", news_id);
             if (data) {
