@@ -20,11 +20,11 @@ module.exports = {
       const data = await getCompanyByEmail("Companies", company_email_address);
       if (data) {
         if (data[0].company_password === company_password) {
-          return {"message": "Login successfully."};
-        } else return {"message": "Wrong password."}
+          return { "message": data[0].id };
+        } else return { "message": "Wrong password." }
       } else throw Error;
     } catch (error) {
-      return {"message": "Invalid credentials!"};
+      return { "message": "Invalid credentials!" };
     }
   },
   insertCompany: async (payload: Payload) => {
