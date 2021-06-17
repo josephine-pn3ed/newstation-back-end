@@ -1,13 +1,13 @@
 import { Payload, Id, Email, Password } from '../../model/Employee/types';
 
-const Employee = require('../../model/Employee');
+const { getEmployees, insertEmployee, updateEmployee, deleteEmployee } = require('../../model/Employee');
 
 module.exports = {
-  getEmployee: async (email: Email, password: Password) => {
+  getEmployees: async () => {
     try {
-      const data = await Employee.getEmployee("Employees", email);
-      if (data && (data.employee_password === password)) {
-        return true;
+      const data = await getEmployees("Employees");
+      if (data) {
+        return data;
       } else throw Error;
     } catch (error) {
       return false;
@@ -15,7 +15,7 @@ module.exports = {
   },
   insertEmployee: async (payload: Payload) => {
     try {
-      const data = await Employee.insertEmployee("Employees",
+      const data = await insertEmployee("Employees",
         {
           ...payload,
           created_at: new Date().toISOString(),
@@ -31,7 +31,7 @@ module.exports = {
   },
   updateEmployee: async (id: Id, payload: Payload) => {
     try {
-      const data = await Employee.updateEmployee("Employees", id, {
+      const data = await updateEmployee("Employees", id, {
         ...payload,
         updated_at: new Date().toISOString(),
       });
@@ -45,7 +45,7 @@ module.exports = {
   },
   deleteEmployee: async (id: Id) => {
     try {
-      const data = await Employee.deleteEmployee("Employees", id, {
+      const data = await deleteEmployee("Employees", id, {
         employee_status: "Inactive",
         updated_at: new Date().toISOString(),
       });
