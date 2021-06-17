@@ -22,6 +22,7 @@ module.exports = {
           id: uuid_v4(),
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
+          company_status: "Active"
         });
       if (data) {
         return data;

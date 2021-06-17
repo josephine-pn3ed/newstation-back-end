@@ -20,6 +20,7 @@ module.exports = {
           ...payload,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
+          employee_status: "Active"
         });
       if (data) {
         return data;
