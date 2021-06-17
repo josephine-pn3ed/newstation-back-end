@@ -4,6 +4,7 @@ const { getCompany, insertCompany, loginCompany } = require('../controller/Compa
 
 route.get('/company/:id', async (req: express.Request, res: express.Response) => {
   const { id } = req.params;
+  console.log(req.params.id)
   const result = await getCompany(id);
   return result ? res.send({ "status": "Success", result }) : res.send({ "status": "Failed" })
 })
