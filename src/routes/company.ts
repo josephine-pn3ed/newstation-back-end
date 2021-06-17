@@ -2,11 +2,10 @@ import express = require('express')
 const route = express.Router();
 const { getCompany, insertCompany, loginCompany } = require('../controller/Company');
 
-route.get('/company/:id', async (req: express.Request, res: express.Response) => {
+route.get('/company', async (req: express.Request, res: express.Response) => {
   const { id } = req.params;
-  console.log(req.params.id)
   const result = await getCompany(id);
-  return result ? res.send({ "status": "Success", result }) : res.send({ "status": "Failed" })
+  return result ? res.send({ "status": "Success" }) : res.send({ "status": "Failed" })
 })
 
 route.post('/company', async (req: express.Request, res: express.Response) => {

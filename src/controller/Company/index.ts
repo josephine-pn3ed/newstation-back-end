@@ -14,20 +14,36 @@ module.exports = {
       return false;
     }
   },
-
+  loginCompany: async (payload: Payload) => {
+    try {
+      const { company_email_address, company_password } = payload;
+      const data = await getCompanyByEmail("Companies", company_email_address);
+      if (data) {
+        if (data[0].company_password === company_password) {
+          return { "message": data[0].id };
+        } else return { "message": "Wrong password." }
+      } else throw Error;
+    } catch (error) {
+      return { "message": "Invalid credentials!" };
+    }
+  },
   insertCompany: async (payload: Payload) => {
     try {
-      const data = await insertCompany("Companies",
-        {
-          ...payload,
-          id: uuid_v4(),
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-          company_status: "Active"
-        });
-      if (data) {
-        return data;
-      } else throw Error;
+      const { company_email_address } = payload;
+      const checkEmail = await getCompanyByEmail("Companies", company_email_address);
+      if (!checkEmail.length) {
+        const data = await insertCompany("Companies",
+          {
+            ...payload,
+            id: uuid_v4(),
+            company_status: 'Active',
+            created_date: new Date().toISOString(),
+            updated_date: new Date().toISOString(),
+          });
+        if (data) {
+          return { "message": data };
+        } else throw Error;
+      } else return { "message": "Email address has already been taken." };
     } catch (error) {
       return false;
     }
@@ -59,19 +75,5 @@ module.exports = {
     catch (error) {
       return false;
     }
-  },
-  loginCompany: async (payload: Payload) => {
-    try {
-      const { company_email_address, company_password } = payload;
-      const data = await getCompanyByEmail("Companies", company_email_address);
-      if (data) {
-        if (data[0].company_password === company_password) {
-          return { "message": "Login successfully." };
-        } else return { "message": "Wrong password." }
-      } else throw Error;
-    } catch (error) {
-      return { "message": "Invalid credentials!" };
-    }
-  },
-
+  }
 }
