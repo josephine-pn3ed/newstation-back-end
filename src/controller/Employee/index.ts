@@ -1,6 +1,7 @@
 import { Payload, Id, Email, Password } from '../../model/Employee/types';
 
-const { getEmployees, insertEmployee, updateEmployee, deleteEmployee } = require('../../model/Employee');
+const { getEmployees, getEmployeeById, getEmployeeByEmail, insertEmployee, updateEmployee, deleteEmployee } = require('../../model/Employee');
+const { getCompanyByEmail } = require('../../model/Company');
 
 module.exports = {
   getEmployees: async () => {
@@ -15,6 +16,19 @@ module.exports = {
   },
   insertEmployee: async (payload: Payload) => {
     try {
+      const { id, employee_email_address } = payload;
+      const checkId = await getEmployeeById("Employees", id);
+      if (!checkId.length()) {
+        return { "message": "Employee ID has already been taken." };
+      }
+      const checkEmployeeEmail = await getEmployeeByEmail("Employees", employee_email_address);
+      if (!checkEmployeeEmail.length()) {
+        return { "message": "Email address has already been taken." };
+      }
+      const checkCompanyEmail = await getCompanyByEmail("Employees", employee_email_address);
+      if (Object.keys(checkCompanyEmail)) {
+        return { "message": "Email address has already been taken." };
+      }
       const data = await insertEmployee("Employees",
         {
           ...payload,

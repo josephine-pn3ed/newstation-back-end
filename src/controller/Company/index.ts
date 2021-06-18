@@ -31,7 +31,7 @@ module.exports = {
     try {
       const { company_email_address } = payload;
       const checkEmail = await getCompanyByEmail("Companies", company_email_address);
-      if (!checkEmail.length) {
+      if (!checkEmail.length()) {
         const data = await insertCompany("Companies",
           {
             ...payload,
