@@ -17,7 +17,6 @@ module.exports = {
     },
     insertEmployee: async (table: Table, payload: Payload) => {
         const data = await db.table(table).insert(payload).run();
-        console.log(data)
         return data;
     },
     updateEmployee: async (table: Table, id: Id, payload: Payload) => {
