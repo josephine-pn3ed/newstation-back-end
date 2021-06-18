@@ -17,4 +17,6 @@ export interface Payload {
     company_status: Status;
     created_at: Date;
     updated_at: Date;
+    password: string;
+    email_address: string;
 }

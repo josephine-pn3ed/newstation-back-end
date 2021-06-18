@@ -24,6 +24,7 @@ module.exports = {
         return data;
     },
     deleteEmployee: async (table: Table, id: Id, payload: Payload) => {
+        console.log(payload)
         const data = await db.table(table).get(id).update(payload).run();
         return data;
     }

@@ -14,6 +14,16 @@ module.exports = {
       return false;
     }
   },
+  getEmployeeById: async (id: Id) => {
+    try {
+      const data = await getEmployeeById("Employees", id);
+      if (data) {
+        return data;
+      } else throw Error;
+    } catch (error) {
+      return false;
+    }
+  },
   insertEmployee: async (payload: Payload) => {
     try {
       const { id, employee_email_address } = payload;
@@ -22,12 +32,12 @@ module.exports = {
         return { "message": "Employee ID has a lready been taken." };
       }
       const checkEmployeeEmail = await getEmployeeByEmail("Employees", employee_email_address);
-      if (checkEmployeeEmail) {
+      if (checkEmployeeEmail.length) {
         return { "message": "Email address has already been taken." };
       }
-      const checkCompanyEmail = await getCompanyByEmail("Employees", employee_email_address);
-      if (checkCompanyEmail) {
-        return { "message": "Email address has already been taken." };
+      const checkCompanyEmail = await getCompanyByEmail("Companies", employee_email_address);
+      if (checkCompanyEmail.length) {
+        return { "message": "sdfdEmail address has already been taken." };
       }
       const data = await insertEmployee("Employees",
         {

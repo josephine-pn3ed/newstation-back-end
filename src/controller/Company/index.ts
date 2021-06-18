@@ -1,7 +1,7 @@
 import { Payload, Id, Email, Password } from '../../model/Company/types';
 import { v4 as uuid_v4 } from 'uuid';
 const { getCompany, insertCompany, getCompanyByEmail, deleteCompany, updateCompany } = require('../../model/Company');
-
+const { getEmployeeByEmail } = require('../../model/Employee');
 
 module.exports = {
   getCompany: async (id: Id) => {
@@ -14,15 +14,23 @@ module.exports = {
       return false;
     }
   },
-  loginCompany: async (payload: Payload) => {
+  login: async (payload: Payload) => {
     try {
-      const { company_email_address, company_password } = payload;
-      const data = await getCompanyByEmail("Companies", company_email_address);
-      if (data) {
-        if (data[0].company_password === company_password) {
-          return { "message": data[0].id };
-        } else return { "message": "Wrong password." }
-      } else throw Error;
+      const { email_address, password } = payload;
+      try {
+        const checkCompany = await getCompanyByEmail("Companies", email_address);
+        if (checkCompany) {
+          if (checkCompany[0].company_password === password) {
+            return { "message": checkCompany[0].id, "user": "company" };
+          } else return { "message": "Wrong password." }
+        }
+      } catch (error) {
+        const checkEmployee = await getEmployeeByEmail("Employees", email_address);
+        if (checkEmployee) {
+          if (checkEmployee[0].employee_password === password) {
+            return { "message": checkEmployee[0].id, "user": "employee" };
+          } else return { "message": "Wrong password." }
+        } else throw Error;}
     } catch (error) {
       return { "message": "Invalid credentials!" };
     }
