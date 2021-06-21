@@ -1,6 +1,6 @@
 import { Payload, Id, Email, Password } from '../../model/Employee/types';
 
-const { getEmployees, getEmployeeById, getEmployeeByEmail, insertEmployee, updateEmployee, deleteEmployee } = require('../../model/Employee');
+const { getEmployees, getEmployeeById, getEmployeeByEmail, insertEmployee, updateEmployee, updateEmployeeByStatus, deleteEmployee } = require('../../model/Employee');
 const { getCompanyByEmail } = require('../../model/Company');
 
 module.exports = {
@@ -57,6 +57,20 @@ module.exports = {
     try {
       const data = await updateEmployee("Employees", id, {
         ...payload,
+        updated_at: new Date().toISOString(),
+      });
+      if (data) {
+        return data;
+      } else throw Error;
+    }
+    catch (error) {
+      return false;
+    }
+  },
+  updateEmployeeByStatus: async (id: Id) => {
+    try {
+      const data = await updateEmployeeByStatus("Employees", id, {
+        employee_status: "Active",
         updated_at: new Date().toISOString(),
       });
       if (data) {

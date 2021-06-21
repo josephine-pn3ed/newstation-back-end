@@ -23,6 +23,10 @@ module.exports = {
         const data = await db.table(table).get(id).update(payload).run();
         return data;
     },
+    updateEmployeeByStatus: async (table: Table, id: Id, payload: Payload) => {
+        const data = await db.table(table).get(id).update(payload).run();
+        return data;
+    },
     deleteEmployee: async (table: Table, id: Id, payload: Payload) => {
         console.log(payload)
         const data = await db.table(table).get(id).update(payload).run();
