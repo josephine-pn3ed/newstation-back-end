@@ -3,8 +3,8 @@ import { Table, Email, Payload, Id } from './types';
 const db = require('../../../db');
 
 module.exports = {
-    getEmployees: async (table: Table) => {
-        const data = await db.table(table).run();
+    getEmployees: async (table: Table, id: Id) => {
+        const data = await db.table(table).filter({ "company_id": id }).run();
         return data;
     },
     getEmployeeById: async (table: Table, id: Id) => {

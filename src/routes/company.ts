@@ -15,7 +15,7 @@ route.post('/company', async (req: express.Request, res: express.Response) => {
 
 route.post('/login', async (req: express.Request, res: express.Response) => {
   const result = await login(req.body);
-  return result ? res.send({ "success": true, "message": result.message , "user": result.user}) : res.send({ "success": false, "message": result.message })
+  return result ? res.send({ "success": true, "message": result.message , "user": result.user, "email": result.email }) : res.send({ "success": false, "message": result.message })
 })
 
 module.exports = route;

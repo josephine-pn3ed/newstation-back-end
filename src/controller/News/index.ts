@@ -1,12 +1,23 @@
-import { Payload, Id, Table } from '../../model/News/types';
+import { Payload, Id } from '../../model/News/types';
 
 const News = require('../../model/News');
 
 module.exports = {
-    getNews: async (id: Id) => {
+    getNewsByCompany: async (id: Id) => {
         try {
             console.log("controller")
-            const data = await News.getNews("News", id);
+            const data = await News.getNewsByCompany("News", id);
+            if (data) {
+                return data;
+            } else throw Error;
+        } catch (error) {
+            return false;
+        }
+    },
+    getNewsByid: async (id: Id) => {
+        try {
+            console.log("controller")
+            const data = await News.getNewsById("News", id);
             if (data) {
                 return data;
             } else throw Error;
@@ -19,6 +30,7 @@ module.exports = {
             const data = await News.insertNews("News",
                 {
                     ...payload,
+                    news_status: 'Active',
                     created_at: new Date().toISOString(),
                     updated_at: new Date().toISOString(),
                 });

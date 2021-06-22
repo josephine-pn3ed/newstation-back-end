@@ -21,14 +21,14 @@ module.exports = {
         const checkCompany = await getCompanyByEmail("Companies", email_address);
         if (checkCompany) {
           if (checkCompany[0].company_password === password) {
-            return { "message": checkCompany[0].id, "user": "company" };
+            return { "message": checkCompany[0].id, "user": "company", "email": checkCompany[0].company_email_address };
           } else return { "message": "Wrong password." }
         }
       } catch (error) {
         const checkEmployee = await getEmployeeByEmail("Employees", email_address);
         if (checkEmployee) {
           if (checkEmployee[0].employee_password === password) {
-            return { "message": checkEmployee[0].id, "user": "employee" };
+            return { "message": checkEmployee[0].id, "user": "employee", "email": checkEmployee[0].employee_email_address };
           } else return { "message": "Wrong password." }
         } else throw Error;}
     } catch (error) {
@@ -39,7 +39,7 @@ module.exports = {
     try {
       const { company_email_address } = payload;
       const checkEmail = await getCompanyByEmail("Companies", company_email_address);
-      if (!checkEmail.length()) {
+      if (!checkEmail.length) {
         const data = await insertCompany("Companies",
           {
             ...payload,

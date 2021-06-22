@@ -4,9 +4,9 @@ const { getEmployees, getEmployeeById, getEmployeeByEmail, insertEmployee, updat
 const { getCompanyByEmail } = require('../../model/Company');
 
 module.exports = {
-  getEmployees: async () => {
+  getEmployees: async (id: Id) => {
     try {
-      const data = await getEmployees("Employees");
+      const data = await getEmployees("Employees", id);
       if (data) {
         return data;
       } else throw Error;

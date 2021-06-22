@@ -2,8 +2,8 @@ import express = require('express')
 const route = express.Router();
 const { getEmployees, getEmployeeById, insertEmployee, updateEmployee, updateEmployeeByStatus, deleteEmployee } = require('../controller/Employee');
 
-route.get('/employee', async (req: express.Request, res: express.Response) => {
-    const result = await getEmployees();
+route.get('/employees/:company_id', async (req: express.Request, res: express.Response) => {
+    const result = await getEmployees(req.params.company_id);
     return result ? res.send(result) : res.send({ "status": "Failed" })
 })
 
