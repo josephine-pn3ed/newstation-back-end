@@ -4,7 +4,8 @@ const { getEmployees, getEmployeeById, insertEmployee, updateEmployee, updateEmp
 
 route.get('/employees/:company_id', async (req: express.Request, res: express.Response) => {
     const result = await getEmployees(req.params.company_id);
-    return result ? res.send(result) : res.send({ "status": "Failed" })
+    console.log(result)
+    return result ? res.send({ "success" : true, result}) : res.send({ "success": false })
 })
 
 route.get('/employee/:id', async (req: express.Request, res: express.Response) => {

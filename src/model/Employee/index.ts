@@ -1,10 +1,11 @@
-import { Table, Email, Payload, Id } from './types';
+import { Table, Email, Payload, Id, Role_Id } from './types';
 
 const db = require('../../../db');
 
 module.exports = {
-    getEmployees: async (table: Table, id: Id) => {
-        const data = await db.table(table).filter({ "company_id": id }).run();
+    getEmployees: async (table: Table, id: Id, role_id: Role_Id) => {
+        const data = await db.table(table).filter({ "company_id": id, "role_id": role_id }).run();
+        console.log(data)
         return data;
     },
     getEmployeeById: async (table: Table, id: Id) => {
@@ -12,7 +13,7 @@ module.exports = {
         return data;
     },
     getEmployeeByEmail: async (table: Table, email: Email) => {
-        const data = await db.table(table).filter({ "employee_email_address": email }).run();
+        const data = await db.table(table).filter({ "user_email_address": email }).run();
         return data;
     },
     insertEmployee: async (table: Table, payload: Payload) => {
