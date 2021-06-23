@@ -19,9 +19,8 @@ route.post('/employee', async (req: express.Request, res: express.Response) => {
 })
 
 route.put('/employee/:id', async (req: express.Request, res: express.Response) => {
-    console.log('updating....')
     const result = await updateEmployee(req.params.id, req.body);
-    return result ? res.send({ "status": "Success" }) : res.send({ "status": "Failed" });
+    return result ? res.send({ "success": true }) : res.send({ "success": false });
 })
 
 route.put('/employee/restore/:id', async (req: express.Request, res: express.Response) => {

@@ -3,9 +3,7 @@ const route = express.Router();
 const { getViewers, insertViewers, updateViewers, deleteViewers } = require('../controller/Viewers');
 
 route.get('/viewers/:news_id', async (req: express.Request, res: express.Response) => {
-    console.log("Accessed READ route");
     const result = await getViewers(req.params.news_id);
-    console.log(result)
     return result.length ? res.send({ status: "Success", result }) : res.send({ "status": "Failed" })
 })
 

@@ -1,4 +1,5 @@
 import { Payload, Id, Email, Password } from '../../model/Employee/types';
+import { v4 as uuid_v4 } from 'uuid';
 
 const { getEmployees, getEmployeeById, getEmployeeByEmail, insertEmployee, updateEmployee, updateEmployeeByStatus, deleteEmployee } = require('../../model/Employee');
 const { getCompanyByEmail } = require('../../model/Company');
@@ -26,11 +27,8 @@ module.exports = {
   },
   insertEmployee: async (payload: Payload) => {
     try {
-      const { id, employee_email_address } = payload;
-      const checkId = await getEmployeeById("Employees", id);
-      if (checkId) {
-        return { "message": "Employee ID has a lready been taken." };
-      }
+      const { employee_email_address, employee_first_name, employee_last_name } = payload;
+      const empId = uuid_v4();
       const checkEmployeeEmail = await getEmployeeByEmail("Employees", employee_email_address);
       if (checkEmployeeEmail.length) {
         return { "message": "Email address has already been taken." };
@@ -42,6 +40,8 @@ module.exports = {
       const data = await insertEmployee("Employees",
         {
           ...payload,
+          id: empId,
+          employee_password: employee_first_name.charAt(0).toUpperCase() + employee_last_name.charAt(0).toUpperCase() + employee_last_name.slice(1) + '@' + empId.slice(0, 5),
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
           employee_status: "Active"

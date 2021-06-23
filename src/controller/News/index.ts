@@ -1,22 +1,22 @@
 import { Payload, Id } from '../../model/News/types';
 
 const News = require('../../model/News');
+const Company = require('../../model/Company');
 
 module.exports = {
     getNewsByCompany: async (id: Id) => {
         try {
-            console.log("controller")
             const data = await News.getNewsByCompany("News", id);
-            if (data) {
-                return data;
+            const company = await Company.getCompany("Companies", id)
+            if (data && company) {
+                return ({data, company});
             } else throw Error;
         } catch (error) {
             return false;
         }
     },
-    getNewsByid: async (id: Id) => {
+    getNewsById: async (id: Id) => {
         try {
-            console.log("controller")
             const data = await News.getNewsById("News", id);
             if (data) {
                 return data;

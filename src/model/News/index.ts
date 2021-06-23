@@ -4,7 +4,7 @@ const db = require('../../../db');
 
 module.exports = {
     getNewsByCompany: async (table: Table, id: Id) => {
-        const data = await db.table(table).filter({ company_id: id }).run();
+        const data = await db.table(table).filter({ company_id: id, news_status: 'Active' }).run();
         return data;
     },
     getNewsById: async (table: Table, id: Id) => {

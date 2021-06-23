@@ -28,7 +28,7 @@ module.exports = {
         const checkEmployee = await getEmployeeByEmail("Employees", email_address);
         if (checkEmployee) {
           if (checkEmployee[0].employee_password === password) {
-            return { "message": checkEmployee[0].id, "user": "employee", "email": checkEmployee[0].employee_email_address };
+            return { "message": checkEmployee[0].company_id, "user": "employee", "email": checkEmployee[0].employee_email_address, "id": checkEmployee[0].id };
           } else return { "message": "Wrong password." }
         } else throw Error;}
     } catch (error) {
