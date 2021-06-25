@@ -4,7 +4,7 @@ const { getNewsByCompany, getNewsById, insertNews, updateNews, deleteNews } = re
 
 route.get('/news/:company_id', async (req: express.Request, res: express.Response) => {
     const result = await getNewsByCompany(req.params.company_id);
-    return result ? res.send({ "success": true, "news": result.data, "company": result.company }) : res.send({ "success": false })
+    return result ? res.send({ "success": true, "news": result }) : res.send({ "success": false })
 })
 
 route.get('/news-company/:id', async (req: express.Request, res: express.Response) => {

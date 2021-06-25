@@ -5,7 +5,7 @@ export type Username = string;
 export type Password = string;
 export type Email = string;
 
-type Status = 'Active' | 'Inactive';
+export type Status = 'Active' | 'Inactive';
 
 export interface Payload {
     id: string;
