@@ -8,6 +8,7 @@ route.get('/news/:company_id', async (req: express.Request, res: express.Respons
 })
 
 route.get('/news-company/:id', async (req: express.Request, res: express.Response) => {
+    console.log('get news', req.params.id)
     const result = await getNewsById(req.params.id);
     return result ? res.send({ "success": true, result }) : res.send({ "success": false })
 })
