@@ -8,9 +8,9 @@ module.exports = {
       const data = await News.getNewsByCompany("News", id);
       let news: INews[] = [];
       data.map((value: any) => {
-        console.log(value);
         const { left, right } = value;
-        const { id, news_body, news_status, news_topic, updated_at, user_id } = left;
+        const { id, news_body, news_status, news_topic, updated_at, user_id } =
+          left;
         const { user_first_name, user_middle_name, user_last_name } = right;
         news = [
           ...news,
@@ -29,24 +29,22 @@ module.exports = {
       });
 
       news.sort((a: INews, b: INews) => {
-        const new_a = a.updated_at
-        const new_b = b.updated_at
-    
-        if(new_a > new_b){
-          return -1
-        }else if(new_a == new_b){
-          return 0
-        } else {
-          return 1
-        }
+        const new_a = a.updated_at;
+        const new_b = b.updated_at;
 
+        if (new_a > new_b) {
+          return -1;
+        } else if (new_a == new_b) {
+          return 0;
+        } else {
+          return 1;
+        }
       });
 
       if (news) {
         return news;
       } else throw Error;
     } catch (error) {
-      console.log(error.message);
       return false;
     }
   },

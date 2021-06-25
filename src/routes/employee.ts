@@ -13,7 +13,6 @@ route.get(
   "/employees/:company_id",
   async (req: express.Request, res: express.Response) => {
     const result = await getEmployees(req.params.company_id);
-    console.log(result)
     return result
       ? res.send({ success: true, result })
       : res.send({ success: false });
@@ -59,7 +58,6 @@ route.delete(
   "/employee/:id",
   async (req: express.Request, res: express.Response) => {
     const result = await deleteEmployee(req.params.id);
-    console.log('deleting!!!!!', result)
     return result
       ? res.send({ status: "Success" })
       : res.send({ status: "Failed" });

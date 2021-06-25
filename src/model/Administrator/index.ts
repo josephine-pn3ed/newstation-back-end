@@ -8,7 +8,6 @@ module.exports = {
       .table(table)
       .filter({ company_id: id, role_id: role_id })
       .run();
-    console.log(data);
     return data;
   },
   getAdministratorById: async (table: Table, id: Id) => {
@@ -33,7 +32,11 @@ module.exports = {
   ) => {
     const data = await db
       .table(table)
-      .filter({ user_email_address: email, role_id: role_id, user_status: "Active" })
+      .filter({
+        user_email_address: email,
+        role_id: role_id,
+        user_status: "Active",
+      })
       .run();
     return data;
   },
