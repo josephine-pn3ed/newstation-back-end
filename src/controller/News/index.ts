@@ -10,12 +10,13 @@ module.exports = {
       data.map((value: any) => {
         console.log(value);
         const { left, right } = value;
-        const { id, news_body, news_status, news_topic, updated_at } = left;
+        const { id, news_body, news_status, news_topic, updated_at, user_id } = left;
         const { user_first_name, user_middle_name, user_last_name } = right;
         news = [
           ...news,
           {
             id: id,
+            user_id: user_id,
             news_body: news_body,
             news_topic: news_topic,
             news_status: news_status,
@@ -26,24 +27,21 @@ module.exports = {
           },
         ];
       });
+
       news.sort((a: INews, b: INews) => {
         const new_a = a.updated_at
         const new_b = b.updated_at
     
-        console.log("a", new_a, "b", new_b);
         if(new_a > new_b){
-          console.log("negative")
           return -1
         }else if(new_a == new_b){
-          console.log("equal")
           return 0
         } else {
-          console.log("positive")
           return 1
         }
 
       });
-      console.log(news);
+
       if (news) {
         return news;
       } else throw Error;
