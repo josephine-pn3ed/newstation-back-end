@@ -5,6 +5,7 @@ const News = require("../../model/News");
 module.exports = {
   getNewsByCompany: async (id: Id) => {
     try {
+      if (!id) throw Error;
       const data = await News.getNewsByCompany("News", id);
       let news: INews[] = [];
       data.map((value: any) => {
@@ -45,11 +46,19 @@ module.exports = {
         return news;
       } else throw Error;
     } catch (error) {
+      const { message } = error;
+
+      if (
+        message ===
+        "None of the pools have an opened connection and failed to open a new one."
+      )
+        return { message: "Database Down!" };
       return false;
     }
   },
   getNewsById: async (id: Id) => {
     try {
+      if (!id) throw Error;
       const data = await News.getNewsById("News", id);
       if (data) {
         return data;
@@ -60,14 +69,16 @@ module.exports = {
   },
   insertNews: async (payload: Payload) => {
     try {
+      const { news_topic, news_body } = payload;
+      if (!news_topic || !news_body) throw Error;
       const data = await News.insertNews("News", {
         ...payload,
         news_status: "Active",
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       });
-      if (data) {
-        return data;
+      if (data.inserted) {
+        return true;
       } else throw Error;
     } catch (error) {
       return false;
@@ -79,8 +90,8 @@ module.exports = {
         ...payload,
         updated_at: new Date().toISOString(),
       });
-      if (data) {
-        return data;
+      if (data.replaced) {
+        return true;
       } else throw Error;
     } catch (error) {
       return false;
@@ -92,8 +103,8 @@ module.exports = {
         news_status: "Inactive",
         updated_at: new Date().toISOString(),
       });
-      if (data) {
-        return data;
+      if (data.replaced) {
+        return true;
       } else throw Error;
     } catch (error) {
       return false;

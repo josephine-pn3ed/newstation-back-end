@@ -8,11 +8,8 @@ route.post("/login", async (req: express.Request, res: express.Response) => {
     ? res.send({
         success: true,
         message: result.message,
-        user: result.user,
-        email: result.email,
-        id: result.id,
       })
-    : res.send({ success: false, message: result.message });
+    : res.status(500).send({ success: false, message: result.message });
 });
 
 module.exports = route;

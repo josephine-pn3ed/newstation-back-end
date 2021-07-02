@@ -15,7 +15,7 @@ route.get(
     const result = await getAdministrators(req.params.company_id);
     return result
       ? res.send({ success: true, result })
-      : res.send({ success: false });
+      : res.status(500).send({ success: false });
   }
 );
 
@@ -25,7 +25,7 @@ route.get(
     const result = await getAdministratorById(req.params.id);
     return result
       ? res.send({ success: true, result })
-      : res.send({ success: false });
+      : res.status(500).send({ success: false });
   }
 );
 
@@ -35,7 +35,7 @@ route.post(
     const result = await insertAdministrator(req.body);
     return result
       ? res.send({ success: true, message: result.message })
-      : res.send({ success: false });
+      : res.status(500).send({ success: false });
   }
 );
 
@@ -53,7 +53,7 @@ route.put(
     const result = await updateAdministratorByStatus(req.params.id);
     return result
       ? res.send({ status: "Success" })
-      : res.send({ status: "Failed" });
+      : res.status(500).send({ status: "Failed" });
   }
 );
 
@@ -63,7 +63,7 @@ route.delete(
     const result = await deleteAdministrator(req.params.id);
     return result
       ? res.send({ status: "Success" })
-      : res.send({ status: "Failed" });
+      : res.status(500).send({ status: "Failed" });
   }
 );
 

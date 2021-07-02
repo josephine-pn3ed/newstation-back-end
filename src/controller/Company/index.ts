@@ -11,6 +11,7 @@ const {
 module.exports = {
   getCompany: async (id: Id) => {
     try {
+      if (!id) throw Error;
       const data = await getCompany("Companies", id);
       if (data) {
         return data;
@@ -21,7 +22,8 @@ module.exports = {
   },
   insertCompany: async (payload: Payload) => {
     try {
-      const { company_email_address } = payload;
+      const { company_email_address, company_name, company_password } = payload;
+      if (!company_email_address || !company_name || !company_password) throw Error;
       const checkEmail = await getCompanyByEmail(
         "Companies",
         company_email_address
@@ -34,7 +36,7 @@ module.exports = {
           created_date: new Date().toISOString(),
           updated_date: new Date().toISOString(),
         });
-        if (data) {
+        if (data.inserted) {
           return { message: data };
         } else throw Error;
       } else return { message: "Email address has already been taken." };
@@ -44,12 +46,13 @@ module.exports = {
   },
   updateCompany: async (id: Id, payload: Payload) => {
     try {
+      if (!id) throw Error;
       const data = await updateCompany("Companies", id, {
         ...payload,
         updated_at: new Date().toISOString(),
       });
-      if (data) {
-        return data;
+      if (data.replaced) {
+        return true;
       } else throw Error;
     } catch (error) {
       return false;
@@ -57,12 +60,13 @@ module.exports = {
   },
   deleteCompany: async (id: Id) => {
     try {
+      if (!id) throw Error;
       const data = await deleteCompany("Companies", id, {
         company_status: "Inactive",
         updated_at: new Date().toISOString(),
       });
-      if (data) {
-        return data;
+      if (data.replaced) {
+        return true;
       } else throw Error;
     } catch (error) {
       return false;

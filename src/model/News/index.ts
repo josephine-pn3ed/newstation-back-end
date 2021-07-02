@@ -4,28 +4,23 @@ const db = require("../../../db");
 
 module.exports = {
   getNewsByCompany: async (table: Table, id: Id) => {
-    const data = await db
+    return await db
       .table(table)
       .filter({ company_id: id, news_status: "Active" })
       .eqJoin("user_id", db.table("Users"), { index: "id" })
       .orderBy(db.desc("updated_at"))
       .run();
-    return data;
   },
   getNewsById: async (table: Table, id: Id) => {
-    const data = await db.table(table).get(id).run();
-    return data;
+    return await db.table(table).get(id).run();
   },
   insertNews: async (table: Table, payload: Payload) => {
-    const data = await db.table(table).insert(payload).run();
-    return data;
+    return await db.table(table).insert(payload).run();
   },
   updateNews: async (table: Table, id: Id, payload: Payload) => {
-    const data = await db.table(table).get(id).update(payload).run();
-    return data;
+    return await db.table(table).get(id).update(payload).run();
   },
   deleteNews: async (table: Table, id: Id, payload: Payload) => {
-    const data = await db.table(table).get(id).update(payload).run();
-    return data;
+    return await db.table(table).get(id).update(payload).run();
   },
 };

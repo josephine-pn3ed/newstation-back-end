@@ -7,6 +7,7 @@ const { getCompanyByEmail } = require('../../model/Company');
 module.exports = {
   getAdministrators: async (id: Id) => {
     try {
+      if (!id) throw Error;
       const data = await getAdministrators("Users", id, 1);
       if (data) {
         return data;
@@ -17,6 +18,7 @@ module.exports = {
   },
   getAdministratorById: async (id: Id) => {
     try {
+      if (!id) throw Error;
       const data = await getAdministratorById("Users", id);
       if (data) {
         return data;
@@ -27,7 +29,8 @@ module.exports = {
   },
   insertAdministrator: async (payload: Payload) => {
     try {
-      const { user_email_address, user_first_name, user_last_name } = payload;
+      const { user_email_address, user_first_name, user_last_name, user_position } = payload;
+      if (!user_email_address || !user_first_name || !user_last_name || user_position) throw Error;
       const empId = uuid_v4();
       const checkEmployeeEmail = await getAdministratorByEmail("Users", user_email_address);
       if (checkEmployeeEmail.length) {
@@ -47,7 +50,7 @@ module.exports = {
           updated_at: new Date().toISOString(),
           user_status: "Active"
         });
-      if (data) {
+      if (data.inserted) {
         return { "message": "Administrator added successfully!" };
       } else throw Error;
     } catch (error) {
@@ -56,12 +59,13 @@ module.exports = {
   },
   updateAdministrator: async (id: Id, payload: Payload) => {
     try {
+      if (!id) throw Error;
       const data = await updateAdministrator("Users", id, {
         ...payload,
         updated_at: new Date().toISOString(),
       });
-      if (data) {
-        return data;
+      if (data.replaced) {
+        return true;
       } else throw Error;
     }
     catch (error) {
@@ -70,12 +74,13 @@ module.exports = {
   },
   updateAdministratorByStatus: async (id: Id) => {
     try {
+      if (!id) throw Error;
       const data = await updateAdministratorByStatus("Users", id, {
         user_status: "Active",
         updated_at: new Date().toISOString(),
       });
-      if (data) {
-        return data;
+      if (data.replaced) {
+        return true;
       } else throw Error;
     }
     catch (error) {
@@ -84,12 +89,13 @@ module.exports = {
   },
   deleteAdministrator: async (id: Id) => {
     try {
+      if (!id) throw Error;
       const data = await deleteAdministrator("Users", id, {
         user_status: "Inactive",
         updated_at: new Date().toISOString(),
       });
-      if (data) {
-        return data;
+      if (data.replaced) {
+        return true;
       } else throw Error;
     }
     catch (error) {

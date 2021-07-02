@@ -12,7 +12,7 @@ route.get(
   async (req: express.Request, res: express.Response) => {
     const { id } = req.params;
     const result = await getCompany(id);
-    return result ? res.send({ result }) : res.send(false);
+    return result ? res.send({ result }) : res.status(500).send(false);
   }
 );
 
@@ -20,7 +20,7 @@ route.post("/company", async (req: express.Request, res: express.Response) => {
   const result = await insertCompany(req.body);
   return result
     ? res.send({ success: true, message: result.message })
-    : res.send({ success: false });
+    : res.status(500).send({ success: false });
 });
 
 route.put(
@@ -29,7 +29,7 @@ route.put(
     const result = await updateCompany(req.params.id, req.body);
     return result
       ? res.send({ status: "Success" })
-      : res.send({ status: "Failed" });
+      : res.status(500).send({ status: "Failed" });
   }
 );
 
@@ -39,7 +39,7 @@ route.delete(
     const result = await deleteCompany(req.params.id);
     return result
       ? res.send({ status: "Success" })
-      : res.send({ status: "Failed" });
+      : res.status(500).send({ status: "Failed" });
   }
 );
 

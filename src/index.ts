@@ -8,9 +8,7 @@ const news = require("./routes/news");
 const login = require("./routes/login")
 const { SERVER_PORT, SERVER_HOST } = process.env;
 
-app.use(express.json());
-
-app.use(login, company, employee, administrator, news);
+app.use(express.json(), login, company, employee, administrator, news);
 
 app.listen(SERVER_PORT, () =>
   console.log(`Server running @ ${SERVER_HOST}:${SERVER_PORT}`)

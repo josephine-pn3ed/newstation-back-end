@@ -15,6 +15,7 @@ const { getCompanyByEmail } = require("../../model/Company");
 module.exports = {
   getEmployees: async (id: Id) => {
     try {
+      if (!id) throw Error;
       const data = await getEmployees("Users", id, 2);
       if (data) {
         return data;
@@ -25,6 +26,7 @@ module.exports = {
   },
   getEmployeeById: async (id: Id) => {
     try {
+      if (!id) throw Error;
       const data = await getEmployeeById("Users", id);
       if (data) {
         return data;
@@ -35,7 +37,8 @@ module.exports = {
   },
   insertEmployee: async (payload: Payload) => {
     try {
-      const { user_email_address, user_first_name, user_last_name } = payload;
+      const { user_email_address, user_first_name, user_last_name, user_position } = payload;
+      if (!user_email_address || !user_first_name || !user_last_name || !user_position) throw Error;
       const empId = uuid_v4();
       const checkEmployeeEmail = await getEmployeeByEmail(
         "Users",
@@ -65,7 +68,7 @@ module.exports = {
         updated_at: new Date().toISOString(),
         user_status: "Active",
       });
-      if (data) {
+      if (data.inserted) {
         return { message: "Employee added successfully!" };
       } else throw Error;
     } catch (error) {
@@ -74,12 +77,13 @@ module.exports = {
   },
   updateEmployee: async (id: Id, payload: Payload) => {
     try {
+      if (!id) throw Error;
       const data = await updateEmployee("Users", id, {
         ...payload,
         updated_at: new Date().toISOString(),
       });
-      if (data) {
-        return data;
+      if (data.replaced) {
+        return true;
       } else throw Error;
     } catch (error) {
       return false;
@@ -87,12 +91,13 @@ module.exports = {
   },
   updateEmployeeByStatus: async (id: Id) => {
     try {
+      if (!id) throw Error;
       const data = await updateEmployeeByStatus("Users", id, {
         user_status: "Active",
         updated_at: new Date().toISOString(),
       });
-      if (data) {
-        return data;
+      if (data.replaced) {
+        return true;
       } else throw Error;
     } catch (error) {
       return false;
@@ -100,12 +105,13 @@ module.exports = {
   },
   deleteEmployee: async (id: Id) => {
     try {
+      if (!id) throw Error;
       const data = await deleteEmployee("Users", id, {
         user_status: "Inactive",
         updated_at: new Date().toISOString(),
       });
-      if (data) {
-        return data;
+      if (data.replaced) {
+        return true;
       } else throw Error;
     } catch (error) {
       return false;

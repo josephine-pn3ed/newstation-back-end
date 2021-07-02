@@ -15,7 +15,7 @@ route.get(
     const result = await getEmployees(req.params.company_id);
     return result
       ? res.send({ success: true, result })
-      : res.send({ success: false });
+      : res.status(500).send({ success: false });
   }
 );
 
@@ -25,7 +25,7 @@ route.get(
     const result = await getEmployeeById(req.params.id);
     return result
       ? res.send({ success: true, result })
-      : res.send({ success: false });
+      : res.status(500).send({ success: false });
   }
 );
 
@@ -33,14 +33,14 @@ route.post("/employee", async (req: express.Request, res: express.Response) => {
   const result = await insertEmployee(req.body);
   return result
     ? res.send({ success: true, message: result.message })
-    : res.send({ success: false });
+    : res.status(500).send({ success: false });
 });
 
 route.put(
   "/employee/:id",
   async (req: express.Request, res: express.Response) => {
     const result = await updateEmployee(req.params.id, req.body);
-    return result ? res.send({ success: true }) : res.send({ success: false });
+    return result ? res.send({ success: true }) : res.status(500).send({ success: false });
   }
 );
 
@@ -50,7 +50,7 @@ route.put(
     const result = await updateEmployeeByStatus(req.params.id);
     return result
       ? res.send({ status: "Success" })
-      : res.send({ status: "Failed" });
+      : res.status(500).send({ status: "Failed" });
   }
 );
 
@@ -60,7 +60,7 @@ route.delete(
     const result = await deleteEmployee(req.params.id);
     return result
       ? res.send({ status: "Success" })
-      : res.send({ status: "Failed" });
+      : res.status(500).send({ status: "Failed" });
   }
 );
 

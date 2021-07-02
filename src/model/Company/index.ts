@@ -4,23 +4,18 @@ const db = require('../../../db');
 
 module.exports = {
     getCompany: async (table: Table, id: Id) => {
-        const data = await db.table(table).get(id).run();
-        return data;
+        return await db.table(table).get(id).run();
     },
     getCompanyByEmail: async (table: Table, email: Email) => {
-        const data = await db.table(table).filter({ "company_email_address": email }).run();
-        return data;
+        return await db.table(table).filter({ "company_email_address": email }).run();
     },
     insertCompany: async (table: Table, payload: Payload) => {
-        const data = await db.table(table).insert(payload).run();
-        return data;
+        return await db.table(table).insert(payload).run();
     },
     updateCompany: async (table: Table, id: Id, payload: Payload) => {
-        const data = await db.table(table).get(id).update(payload).run();
-        return data;
+        return await db.table(table).get(id).update(payload).run();
     },
     deleteCompany: async (table: Table, id: Id, payload: Payload) => {
-        const data = await db.table(table).get(id).update(payload).run();
-        return data;
+        return await db.table(table).get(id).update(payload).run();
     }
 }
