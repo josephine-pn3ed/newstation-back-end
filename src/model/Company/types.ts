@@ -8,15 +8,12 @@ type Status = 'Active' | 'Inactive';
 
 export interface Payload {
     id: string;
-    company_name: string;
-    company_image: any; //any lang sa
-    company_address: string;
-    company_contact_number: number;
-    company_email_address: string;
-    company_password: string;
-    company_status: Status;
+    name: string;
+    address: string;
+    contact_number: number;
+    email_address: string;
+    password: string;
+    status: Status;
     created_at: Date;
     updated_at: Date;
-    password: string;
-    email_address: string;
 }

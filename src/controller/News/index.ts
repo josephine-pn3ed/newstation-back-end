@@ -7,24 +7,24 @@ module.exports = {
     try {
       if (!id) throw Error;
       const data = await News.getNewsByCompany("News", id);
+
       let news: INews[] = [];
       data.map((value: any) => {
         const { left, right } = value;
-        const { id, news_body, news_status, news_topic, updated_at, user_id } =
-          left;
-        const { user_first_name, user_middle_name, user_last_name } = right;
+        const { id, body, status, topic, updated_at, user_id } = left;
+        const { first_name, middle_name, last_name } = right;
         news = [
           ...news,
           {
             id: id,
             user_id: user_id,
-            news_body: news_body,
-            news_topic: news_topic,
-            news_status: news_status,
+            body: body,
+            topic: topic,
+            status: status,
             updated_at: updated_at,
-            user_first_name: user_first_name,
-            user_middle_name: user_middle_name,
-            user_last_name: user_last_name,
+            first_name: first_name,
+            middle_name: middle_name,
+            last_name: last_name,
           },
         ];
       });
@@ -42,9 +42,9 @@ module.exports = {
         }
       });
 
-      if (news) {
-        return news;
-      } else throw Error;
+      if (!news) throw Error;
+      console.log(news)
+      return news;
     } catch (error) {
       const { message } = error;
 
@@ -60,52 +60,54 @@ module.exports = {
     try {
       if (!id) throw Error;
       const data = await News.getNewsById("News", id);
-      if (data) {
-        return data;
-      } else throw Error;
+
+      if (!data) throw Error;
+      return data;
     } catch (error) {
       return false;
     }
   },
   insertNews: async (payload: Payload) => {
     try {
-      const { news_topic, news_body } = payload;
-      if (!news_topic || !news_body) throw Error;
+      const { topic, body, user_id, company_id } = payload;
+      if (!topic || !body || !user_id || !company_id) throw Error;
+
       const data = await News.insertNews("News", {
         ...payload,
-        news_status: "Active",
+        status: "Active",
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       });
-      if (data.inserted) {
-        return true;
-      } else throw Error;
+
+      if (!data.inserted) throw Error;
+      return true;
     } catch (error) {
       return false;
     }
   },
   updateNews: async (id: Id, payload: Payload) => {
     try {
+      if (!id) throw Error;
       const data = await News.updateNews("News", id, {
         ...payload,
         updated_at: new Date().toISOString(),
       });
-      if (data.replaced) {
-        return true;
-      } else throw Error;
+
+      if (!data.replaced) throw Error;
+      return true;
     } catch (error) {
       return false;
     }
   },
   deleteNews: async (id: Id) => {
     try {
+      if (!id) throw Error;
       const data = await News.deleteNews("News", id, {
-        news_status: "Inactive",
+        status: "Inactive",
         updated_at: new Date().toISOString(),
       });
-      if (data.replaced) {
-        return true;
-      } else throw Error;
+      if (!data.replaced) throw Error;
+      return true;
     } catch (error) {
       return false;
     }

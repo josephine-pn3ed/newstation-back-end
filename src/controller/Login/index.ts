@@ -9,18 +9,18 @@ const {
 
 const handleCompanyLogin = async (email_address: Email, password: Password) => {
   try {
-    const checkCompany = await getCompanyByEmail("Companies", email_address);
-    if (checkCompany) {
-      if (checkCompany[0].company_password === password) {
-        const token = access_token(
-          checkCompany[0].company_email_address,
-          checkCompany[0].id,
-          "company",
-          checkCompany[0].user_id
-        );
-        return { message: token };
-      } else return { message: "Wrong password." };
-    } else throw Error;
+    const checkCompany = await getCompanyByEmail("Company", email_address);
+
+    if (!checkCompany) throw Error;
+    if (checkCompany[0].password !== password)
+      return { message: "Wrong password." };
+    const token = access_token(
+      checkCompany[0].email_address,
+      checkCompany[0].id,
+      "company",
+      checkCompany[0].user_id
+    );
+    return { message: token };
   } catch (error) {
     return handleEmployeeLogin(email_address, password);
   }
@@ -32,22 +32,21 @@ const handleEmployeeLogin = async (
 ) => {
   try {
     const checkEmployee = await getEmployeeByEmailAndStatus(
-      "Users",
+      "User",
       email_address,
       2
     );
 
-    if (checkEmployee) {
-      if (checkEmployee[0].user_password === password) {
-        const token = access_token(
-          checkEmployee[0].user_email_address,
-          checkEmployee[0].company_id,
-          "employee",
-          checkEmployee[0].id
-        );
-        return { message: token };
-      } else return { message: "Wrong password." };
-    } else throw Error;
+    if (!checkEmployee) throw Error;
+    if (checkEmployee[0].password !== password)
+      return { message: "Wrong password." };
+    const token = access_token(
+      checkEmployee[0].email_address,
+      checkEmployee[0].company_id,
+      "employee",
+      checkEmployee[0].id
+    );
+    return { message: token };
   } catch (error) {
     return handleAdministratorLogin(email_address, password);
   }
@@ -59,22 +58,21 @@ const handleAdministratorLogin = async (
 ) => {
   try {
     const checkAdministrator = await getAdministratorByEmailAndStatus(
-      "Users",
+      "User",
       email_address,
       1
     );
 
-    if (checkAdministrator) {
-      if (checkAdministrator[0].user_password === password) {
-        const token = access_token(
-          checkAdministrator[0].user_email_address,
-          checkAdministrator[0].company_id,
-          "administrator",
-          checkAdministrator[0].id
-        );
-        return { message: token };
-      } else return { message: "Wrong password." };
-    } else throw Error;
+    if (!checkAdministrator) throw Error;
+    if (checkAdministrator[0].password !== password)
+      return { message: "Wrong password." };
+    const token = access_token(
+      checkAdministrator[0].email_address,
+      checkAdministrator[0].company_id,
+      "administrator",
+      checkAdministrator[0].id
+    );
+    return { message: token };
   } catch (error) {
     const { message } = error;
 

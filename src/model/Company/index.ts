@@ -7,7 +7,7 @@ module.exports = {
         return await db.table(table).get(id).run();
     },
     getCompanyByEmail: async (table: Table, email: Email) => {
-        return await db.table(table).filter({ "company_email_address": email }).run();
+        return await db.table(table).filter({ "email_address": email }).run();
     },
     insertCompany: async (table: Table, payload: Payload) => {
         return await db.table(table).insert(payload).run();

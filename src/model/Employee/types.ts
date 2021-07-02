@@ -11,16 +11,16 @@ export interface Payload {
     id: string;
     company_id: string;
     role_id: number;
-    user_first_name: string;
-    user_middle_name: string;
-    user_last_name: string;
-    user_email_address : string;
-    user_password: string;
-    user_address: string;
-    user_position: string;
-    user_contact_number: number;
-    user_status: Status;
-    user_image: any;
+    first_name: string;
+    middle_name: string;
+    last_name: string;
+    email_address : string;
+    password: string;
+    address: string;
+    position: string;
+    contact_number: number;
+    status: Status;
+    image: any;
     created_at: Date;
     updated_at: Date;
 }

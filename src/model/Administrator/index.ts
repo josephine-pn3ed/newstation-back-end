@@ -16,7 +16,7 @@ module.exports = {
   ) => {
     return db
       .table(table)
-      .filter({ user_email_address: email, role_id: role_id })
+      .filter({ email_address: email, role_id: role_id })
       .run();
   },
   getAdministratorByEmailAndStatus: async (
@@ -27,9 +27,9 @@ module.exports = {
     return db
       .table(table)
       .filter({
-        user_email_address: email,
+        email_address: email,
         role_id: role_id,
-        user_status: "Active",
+        status: "Active",
       })
       .run();
   },

@@ -15,13 +15,13 @@ module.exports = {
   getEmployeeByEmail: async (table: Table, email: Email, role_id: Role_Id) => {
     return await db
       .table(table)
-      .filter({ user_email_address: email, role_id: role_id })
+      .filter({ email_address: email, role_id: role_id })
       .run();
   },
   getEmployeeByEmailAndStatus: async (table: Table, email: Email, role_id: Role_Id) => {
     return await db
       .table(table)
-      .filter({ user_email_address: email, role_id: role_id, user_status: "Active" })
+      .filter({ email_address: email, role_id: role_id, status: "Active" })
       .run();
   },
   insertEmployee: async (table: Table, payload: Payload) => {
