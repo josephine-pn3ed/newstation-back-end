@@ -12,24 +12,26 @@ route.get(
   async (req: express.Request, res: express.Response) => {
     const { id } = req.params;
     const result = await getCompany(id);
-    return result ? res.send({ result }) : res.status(500).send(false);
+    return res.send(result);
   }
 );
 
 route.post("/company", async (req: express.Request, res: express.Response) => {
+  if (!req.body) return "Invalid credentials.";
+  const { email_address, name, password } = req.body;
+  if (!email_address) return "Email address is empty.";
+  if (!name) return "Name is empty.";
+  if (!password) return "Password is empty.";
+
   const result = await insertCompany(req.body);
-  return result
-    ? res.send({ success: true, message: result.message })
-    : res.status(500).send({ success: false });
+  return res.send(result);
 });
 
 route.put(
   "/company/:id",
   async (req: express.Request, res: express.Response) => {
     const result = await updateCompany(req.params.id, req.body);
-    return result
-      ? res.send({ status: "Success" })
-      : res.status(500).send({ status: "Failed" });
+    return res.send(result);
   }
 );
 
@@ -37,9 +39,7 @@ route.delete(
   "/company/:id",
   async (req: express.Request, res: express.Response) => {
     const result = await deleteCompany(req.params.id);
-    return result
-      ? res.send({ status: "Success" })
-      : res.status(500).send({ status: "Failed" });
+    return res.send(result);
   }
 );
 

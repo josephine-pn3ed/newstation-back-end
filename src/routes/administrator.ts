@@ -13,9 +13,7 @@ route.get(
   "/administrators/:company_id",
   async (req: express.Request, res: express.Response) => {
     const result = await getAdministrators(req.params.company_id);
-    return result
-      ? res.send({ success: true, result })
-      : res.status(500).send({ success: false });
+    return res.send(result);
   }
 );
 
@@ -23,19 +21,22 @@ route.get(
   "/administrator/:id",
   async (req: express.Request, res: express.Response) => {
     const result = await getAdministratorById(req.params.id);
-    return result
-      ? res.send({ success: true, result })
-      : res.status(500).send({ success: false });
+    return res.send(result);
   }
 );
 
 route.post(
   "/administrator",
   async (req: express.Request, res: express.Response) => {
+    if (!req.body) return "Invalid credentials.";
+    const { email_address, first_name, last_name, position } = req.body;
+    if (!email_address) return "Email address is empty.";
+    if (!first_name) return "First name is empty.";
+    if (!last_name) return "Last name is empty.";
+    if (!position) return "Position is empty.";
+    
     const result = await insertAdministrator(req.body);
-    return result
-      ? res.send({ success: true, message: result.message })
-      : res.status(500).send({ success: false });
+    return res.send(result);
   }
 );
 
@@ -51,9 +52,7 @@ route.put(
   "/administrator/restore/:id",
   async (req: express.Request, res: express.Response) => {
     const result = await updateAdministratorByStatus(req.params.id);
-    return result
-      ? res.send({ status: "Success" })
-      : res.status(500).send({ status: "Failed" });
+    return res.send(result);
   }
 );
 
@@ -61,9 +60,7 @@ route.delete(
   "/administrator/:id",
   async (req: express.Request, res: express.Response) => {
     const result = await deleteAdministrator(req.params.id);
-    return result
-      ? res.send({ status: "Success" })
-      : res.status(500).send({ status: "Failed" });
+    return res.send(result);
   }
 );
 

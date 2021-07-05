@@ -11,21 +11,24 @@ const {
 module.exports = {
   getCompany: async (id: Id) => {
     try {
-      if (!id) throw Error;
       const data = await getCompany("Company", id);
-      if (!data) throw Error;
+      if (!data.length) return "No company found!";
       return data;
     } catch (error) {
-      return false;
+      const { message } = error;
+      if (
+        message ===
+        "None of the pools have an opened connection and failed to open a new one."
+      )
+        return "Database down!";
     }
   },
   insertCompany: async (payload: Payload) => {
     try {
-      const { email_address, name, password } = payload;
-      if (!email_address || !name || !password) throw Error;
+      const { email_address } = payload;
 
       const checkEmail = await getCompanyByEmail("Company", email_address);
-      if (checkEmail.length) throw Error;
+      if (checkEmail.length) return "Email address has already been taken!";
 
       const data = await insertCompany("Company", {
         ...payload,
@@ -35,11 +38,15 @@ module.exports = {
         updated_date: new Date().toISOString(),
       });
 
-      if (!data.inserted)
-        return { message: "Email address has already been taken." };
-      return { message: data };
+      if (!data.inserted) return "Company not added!";
+      return "Company added successfully!";
     } catch (error) {
-      return false;
+      const { message } = error;
+      if (
+        message ===
+        "None of the pools have an opened connection and failed to open a new one."
+      )
+        return "Database down!";
     }
   },
   updateCompany: async (id: Id, payload: Payload) => {
@@ -49,10 +56,15 @@ module.exports = {
         ...payload,
         updated_at: new Date().toISOString(),
       });
-      if (!data.replaced) throw Error;
-      return true;
+      if (!data.replaced) return "Company not updated!";
+      return "Company updated successfully!";
     } catch (error) {
-      return false;
+      const { message } = error;
+      if (
+        message ===
+        "None of the pools have an opened connection and failed to open a new one."
+      )
+        return "Database down!";
     }
   },
   deleteCompany: async (id: Id) => {
@@ -62,10 +74,15 @@ module.exports = {
         status: "Inactive",
         updated_at: new Date().toISOString(),
       });
-      if (!data.replaced) throw Error;
-      return true;
+      if (!data.replaced) return "Company not deleted!";
+      return "Company deleted successfully!";
     } catch (error) {
-      return false;
+      const { message } = error;
+      if (
+        message ===
+        "None of the pools have an opened connection and failed to open a new one."
+      )
+        return "Database down!";
     }
   },
 };

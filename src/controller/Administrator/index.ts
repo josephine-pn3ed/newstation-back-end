@@ -15,45 +15,51 @@ const { getCompanyByEmail } = require("../../model/Company");
 module.exports = {
   getAdministrators: async (id: Id) => {
     try {
-      if (!id) throw Error;
       const data = await getAdministrators("User", id, 1);
-      if (!data) throw Error;
+      if (!data.length) return "No administrator found!";
       return data;
     } catch (error) {
-      return false;
+      const { message } = error;
+      if (
+        message ===
+        "None of the pools have an opened connection and failed to open a new one."
+      )
+        return "Database down!";
     }
   },
   getAdministratorById: async (id: Id) => {
     try {
-      if (!id) throw Error;
       const data = await getAdministratorById("User", id);
-      if (!data) throw Error;
+      if (!data) return "No administrator found!";
       return data;
     } catch (error) {
-      return false;
+      const { message } = error;
+      if (
+        message ===
+        "None of the pools have an opened connection and failed to open a new one."
+      )
+        return "Database down!";
     }
   },
   insertAdministrator: async (payload: Payload) => {
     try {
-      const { email_address, first_name, last_name, position } = payload;
-      if (!email_address || !first_name || !last_name || !position) throw Error;
+      const { email_address, first_name, last_name } = payload;
       const empId = uuid_v4();
       const checkEmployeeEmail = await getAdministratorByEmail(
         "User",
         email_address
       );
-      console.log("employee", checkEmployeeEmail)
+      
       if (checkEmployeeEmail.length) {
-        return { message: "Email address has already been taken." };
+        return "Email address has already been taken.";
       }
       const checkCompanyEmail = await getCompanyByEmail(
         "Company",
         email_address
       );
-      console.log("company", checkCompanyEmail);
       
       if (checkCompanyEmail.length) {
-        return { message: "Email address has already been taken." };
+        return "Email address has already been taken.";
       }
       const data = await insertAdministrator("User", {
         ...payload,
@@ -69,50 +75,69 @@ module.exports = {
         updated_at: new Date().toISOString(),
         status: "Active",
       });
-      if (!data.inserted) throw Error;
+
+      if (!data.inserted) return "Administrator not added!";
       return { message: "Administrator added successfully!" };
     } catch (error) {
-      console.log(error.message)
-      return error;
+      const { message } = error;
+      if (
+        message ===
+        "None of the pools have an opened connection and failed to open a new one."
+      )
+        return "Database down!";
     }
   },
   updateAdministrator: async (id: Id, payload: Payload) => {
     try {
-      if (!id) throw Error;
       const data = await updateAdministrator("User", id, {
         ...payload,
         updated_at: new Date().toISOString(),
       });
-      if (!data.replaced) throw Error;
-      return true;
+      if (!data.replaced) return "Administrator not updated!";
+      return "Administrator updated successfully!";
     } catch (error) {
-      return false;
+      const { message } = error;
+      if (
+        message ===
+        "None of the pools have an opened connection and failed to open a new one."
+      )
+        return "Database down!";
     }
   },
   updateAdministratorByStatus: async (id: Id) => {
     try {
-      if (!id) throw Error;
       const data = await updateAdministratorByStatus("User", id, {
         status: "Active",
         updated_at: new Date().toISOString(),
       });
-      if (!data.replaced) throw Error;
-      return true;
+
+      if (!data.replaced) return "Administrator not updated!";
+      return "Administrator updated successfully!";
     } catch (error) {
-      return false;
+      const { message } = error;
+      if (
+        message ===
+        "None of the pools have an opened connection and failed to open a new one."
+      )
+        return "Database down!";
     }
   },
   deleteAdministrator: async (id: Id) => {
     try {
-      if (!id) throw Error;
       const data = await deleteAdministrator("User", id, {
         status: "Inactive",
         updated_at: new Date().toISOString(),
       });
-      if (!data.replaced) throw Error;
-      return true;
+      
+      if (!data.replaced) return "Administrator not deleted!";
+      return "Administrator deleted successfully!";
     } catch (error) {
-      return false;
+      const { message } = error;
+      if (
+        message ===
+        "None of the pools have an opened connection and failed to open a new one."
+      )
+        return "Database down!";
     }
   },
 };

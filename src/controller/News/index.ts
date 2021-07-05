@@ -5,7 +5,6 @@ const News = require("../../model/News");
 module.exports = {
   getNewsByCompany: async (id: Id) => {
     try {
-      if (!id) throw Error;
       const data = await News.getNewsByCompany("News", id);
 
       let news: INews[] = [];
@@ -42,36 +41,34 @@ module.exports = {
         }
       });
 
-      if (!news) throw Error;
-      console.log(news)
+      if (!news.length) return "No news found!";
       return news;
     } catch (error) {
       const { message } = error;
-
       if (
         message ===
         "None of the pools have an opened connection and failed to open a new one."
       )
-        return { message: "Database Down!" };
-      return false;
+        return "Database down!";
     }
   },
   getNewsById: async (id: Id) => {
     try {
-      if (!id) throw Error;
       const data = await News.getNewsById("News", id);
 
-      if (!data) throw Error;
+      if (!data) return "No news found!";
       return data;
     } catch (error) {
-      return false;
+      const { message } = error;
+      if (
+        message ===
+        "None of the pools have an opened connection and failed to open a new one."
+      )
+        return "Database down!";
     }
   },
   insertNews: async (payload: Payload) => {
     try {
-      const { topic, body, user_id, company_id } = payload;
-      if (!topic || !body || !user_id || !company_id) throw Error;
-
       const data = await News.insertNews("News", {
         ...payload,
         status: "Active",
@@ -79,37 +76,50 @@ module.exports = {
         updated_at: new Date().toISOString(),
       });
 
-      if (!data.inserted) throw Error;
+      if (!data.inserted) return "News not added!";
       return true;
     } catch (error) {
-      return false;
+      const { message } = error;
+      if (
+        message ===
+        "None of the pools have an opened connection and failed to open a new one."
+      )
+        return "Database down!";
     }
   },
   updateNews: async (id: Id, payload: Payload) => {
     try {
-      if (!id) throw Error;
       const data = await News.updateNews("News", id, {
         ...payload,
         updated_at: new Date().toISOString(),
       });
 
-      if (!data.replaced) throw Error;
-      return true;
+      if (!data.replaced) return "News not updated!";
+      return "News updated successfully!";
     } catch (error) {
-      return false;
+      const { message } = error;
+      if (
+        message ===
+        "None of the pools have an opened connection and failed to open a new one."
+      )
+        return "Database down!";
     }
   },
   deleteNews: async (id: Id) => {
     try {
-      if (!id) throw Error;
       const data = await News.deleteNews("News", id, {
         status: "Inactive",
         updated_at: new Date().toISOString(),
       });
-      if (!data.replaced) throw Error;
-      return true;
+      if (!data.replaced) return "News not deleted!";
+      return "News deleted successfully!";
     } catch (error) {
-      return false;
+      const { message } = error;
+      if (
+        message ===
+        "None of the pools have an opened connection and failed to open a new one."
+      )
+        return "Database down!";
     }
   },
 };

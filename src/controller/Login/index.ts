@@ -7,28 +7,35 @@ const {
   getAdministratorByEmailAndStatus,
 } = require("../../model/Administrator");
 
-const handleCompanyLogin = async (email_address: Email, password: Password) => {
+const handleCompanyLogin = async (
+  email_address: Email,
+  login_password: Password
+) => {
   try {
     const checkCompany = await getCompanyByEmail("Company", email_address);
+    
+    if (!checkCompany.length) {
+      return handleEmployeeLogin(email_address, login_password);
+    }
+    const { password, id, user_id } = checkCompany[0];
 
-    if (!checkCompany) throw Error;
-    if (checkCompany[0].password !== password)
-      return { message: "Wrong password." };
-    const token = access_token(
-      checkCompany[0].email_address,
-      checkCompany[0].id,
-      "company",
-      checkCompany[0].user_id
-    );
-    return { message: token };
+    if (password !== login_password)
+      return "Wrong password.";
+
+    return access_token(email_address, id, "company", user_id);
   } catch (error) {
-    return handleEmployeeLogin(email_address, password);
+    const { message } = error;
+    if (
+      message ===
+      "None of the pools have an opened connection and failed to open a new one."
+    )
+      return "Database Down!";
   }
 };
 
 const handleEmployeeLogin = async (
   email_address: Email,
-  password: Password
+  login_password: Password
 ) => {
   try {
     const checkEmployee = await getEmployeeByEmailAndStatus(
@@ -37,24 +44,28 @@ const handleEmployeeLogin = async (
       2
     );
 
-    if (!checkEmployee) throw Error;
-    if (checkEmployee[0].password !== password)
-      return { message: "Wrong password." };
-    const token = access_token(
-      checkEmployee[0].email_address,
-      checkEmployee[0].company_id,
-      "employee",
-      checkEmployee[0].id
-    );
-    return { message: token };
+    if (!checkEmployee.length) {
+      return handleAdministratorLogin(email_address, login_password);
+    }
+    const { password, company_id, id } = checkEmployee[0];
+
+    if (password !== login_password)
+      return "Wrong password.";
+
+    return access_token(email_address, company_id, "employee", id);
   } catch (error) {
-    return handleAdministratorLogin(email_address, password);
+    const { message } = error;
+    if (
+      message ===
+      "None of the pools have an opened connection and failed to open a new one."
+    )
+      return "Database Down!";
   }
 };
 
 const handleAdministratorLogin = async (
   email_address: Email,
-  password: Password
+  login_password: Password
 ) => {
   try {
     const checkAdministrator = await getAdministratorByEmailAndStatus(
@@ -63,25 +74,22 @@ const handleAdministratorLogin = async (
       1
     );
 
-    if (!checkAdministrator) throw Error;
-    if (checkAdministrator[0].password !== password)
-      return { message: "Wrong password." };
-    const token = access_token(
-      checkAdministrator[0].email_address,
-      checkAdministrator[0].company_id,
-      "administrator",
-      checkAdministrator[0].id
-    );
-    return { message: token };
+    if (!checkAdministrator.length)
+      return "Email does not exist.";
+
+    const { password, company_id, id } = checkAdministrator[0];
+
+    if (password !== login_password)
+      return "Wrong password.";
+
+    return access_token(email_address, company_id, "administrator", id);
   } catch (error) {
     const { message } = error;
-
     if (
       message ===
       "None of the pools have an opened connection and failed to open a new one."
     )
-      return { message: "Database Down!" };
-    return { message: "Invalid credentials!" };
+      return "Database down!";
   }
 };
 
@@ -106,8 +114,6 @@ const access_token = (
 module.exports = {
   login: (payload: Payload) => {
     const { email_address, password } = payload;
-
-    if (!email_address || !password) return { message: "Invalid credentials!" };
     return handleCompanyLogin(email_address, password);
   },
 };
