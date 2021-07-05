@@ -111,8 +111,8 @@ module.exports = {
         updated_at: new Date().toISOString(),
       });
 
-      if (!data.replaced) return "Administrator not updated!";
-      return "Administrator updated successfully!";
+      if (!data.replaced) return "Administrator not restored!";
+      return "Administrator restored successfully!";
     } catch (error) {
       const { message } = error;
       if (

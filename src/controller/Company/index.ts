@@ -12,7 +12,8 @@ module.exports = {
   getCompany: async (id: Id) => {
     try {
       const data = await getCompany("Company", id);
-      if (!data.length) return "No company found!";
+      
+      if (!data) return "No company found!";
       return data;
     } catch (error) {
       const { message } = error;

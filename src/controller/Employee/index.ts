@@ -110,8 +110,8 @@ module.exports = {
         status: "Active",
         updated_at: new Date().toISOString(),
       });
-      if (!data.replaced) return "Employee not updated!";
-      return "Employee updated successfully!";
+      if (!data.replaced) return "Employee not restored!";
+      return "Employee restored successfully!";
     } catch (error) {
       const { message } = error;
       if (
