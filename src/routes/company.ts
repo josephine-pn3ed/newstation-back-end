@@ -17,12 +17,6 @@ route.get(
 );
 
 route.post("/company", async (req: express.Request, res: express.Response) => {
-  if (!req.body) return "Invalid credentials.";
-  const { email_address, name, password } = req.body;
-  if (!email_address) return "Email address is empty.";
-  if (!name) return "Name is empty.";
-  if (!password) return "Password is empty.";
-
   const result = await insertCompany(req.body);
   return res.send(result);
 });

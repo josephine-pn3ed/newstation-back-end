@@ -28,13 +28,6 @@ route.get(
 route.post(
   "/administrator",
   async (req: express.Request, res: express.Response) => {
-    if (!req.body) return "Invalid credentials.";
-    const { email_address, first_name, last_name, position } = req.body;
-    if (!email_address) return "Email address is empty.";
-    if (!first_name) return "First name is empty.";
-    if (!last_name) return "Last name is empty.";
-    if (!position) return "Position is empty.";
-    
     const result = await insertAdministrator(req.body);
     return res.send(result);
   }

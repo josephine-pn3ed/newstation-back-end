@@ -25,13 +25,6 @@ route.get(
 );
 
 route.post("/news", async (req: express.Request, res: express.Response) => {
-  if (!req.body) return "Invalid credentials.";
-  const { topic, body, user_id, company_id } = req.body;
-  if (!topic) return "News topic is empty.";
-  if (!body) return "News body is empty.";
-  if (!user_id) return "User id is empty.";
-  if (!company_id) return "Company id is empty.";
-  
   const result = await insertNews(req.body);
   return res.send(result);
 });
