@@ -68,12 +68,6 @@ module.exports = {
     }
   },
   insertNews: async (payload: Payload) => {
-    if (!payload) return "Invalid credentials.";
-    const { topic, body, user_id, company_id } = payload;
-    if (!topic) return "News topic is empty.";
-    if (!body) return "News body is empty.";
-    if (!user_id) return "User id is empty.";
-    if (!company_id) return "Company id is empty.";
     
     try {
       const data = await News.insertNews("News", {

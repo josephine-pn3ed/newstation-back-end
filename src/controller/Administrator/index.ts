@@ -43,13 +43,6 @@ module.exports = {
     }
   },
   insertAdministrator: async (payload: Payload) => {
-    if (!payload) return "Invalid credentials.";
-    const { email_address, first_name, last_name, position } = payload;
-    if (!email_address) return "Email address is empty.";
-    if (!first_name) return "First name is empty.";
-    if (!last_name) return "Last name is empty.";
-    if (!position) return "Position is empty.";
-
     try {
       const { email_address, first_name, last_name } = payload;
       const empId = uuid_v4();

@@ -113,10 +113,7 @@ const access_token = (
 
 module.exports = {
   login: (payload: Payload) => {
-    if (!payload) return "Invalid credentials.";
     const { email_address, password } = payload;
-    if (!email_address) return "Email address is empty.";
-    if (!password) return "Password is empty.";
   
     return handleCompanyLogin(email_address, password);
   },

@@ -25,12 +25,6 @@ module.exports = {
     }
   },
   insertCompany: async (payload: Payload) => {
-    if (!payload) return "Invalid credentials.";
-    const { email_address, name, password } = payload;
-    if (!email_address) return "Email address is empty.";
-    if (!name) return "Name is empty.";
-    if (!password) return "Password is empty.";
-  
     try {
       const { email_address } = payload;
 
