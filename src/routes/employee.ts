@@ -28,7 +28,6 @@ route.get(
 );
 
 route.post("/employee", async (req: express.Request, res: express.Response) => {
-  if (!req.body) return res.send("Invalid credentials.");
   const { email_address, first_name, last_name, position } = req.body;
   if (!email_address) return res.send("Email address is empty.");
   if (!first_name) return res.send("First name is empty.");
@@ -42,7 +41,6 @@ route.post("/employee", async (req: express.Request, res: express.Response) => {
 route.put(
   "/employee/:id",
   async (req: express.Request, res: express.Response) => {
-    if (!req.body) return res.send("Invalid credentials.");
     const { email_address, first_name, last_name, position } = req.body;
     if (!email_address) return res.send("Email address is empty.");
     if (!first_name) return res.send("First name is empty.");

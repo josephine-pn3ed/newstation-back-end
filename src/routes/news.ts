@@ -27,7 +27,6 @@ route.get(
 );
 
 route.post("/news", async (req: express.Request, res: express.Response) => {
-  if (!req.body) return res.send("Invalid credentials.");
   const { topic, body, user_id, company_id } = req.body;
   if (!topic) return res.send("News topic is empty.");
   if (!body) return res.send("News body is empty.");
@@ -39,7 +38,6 @@ route.post("/news", async (req: express.Request, res: express.Response) => {
 });
 
 route.put("/news/:id", async (req: express.Request, res: express.Response) => {
-  if (!req.body) return res.send("Invalid credentials.");
   const { topic, body, user_id, company_id } = req.body;
   if (!topic) return res.send("News topic is empty.");
   if (!body) return res.send("News body is empty.");
