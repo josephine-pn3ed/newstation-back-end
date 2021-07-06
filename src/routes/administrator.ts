@@ -10,7 +10,7 @@ const {
 } = require("../controller/Administrator");
 
 route.get(
-  "/administrators/:company_id",
+  "/administrator/company/:company_id",
   async (req: express.Request, res: express.Response) => {
     const result = await getAdministrators(req.params.company_id);
     return res.send(result);

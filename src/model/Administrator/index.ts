@@ -33,7 +33,7 @@ module.exports = {
       })
       .run();
   },
-  insertAdministrator: async (table: Table, payload: Payload) => {
+  insertUserAdministrator: async (table: Table, payload: Payload) => {
     return db.table(table).insert(payload).run();
   },
   updateAdministrator: async (table: Table, id: Id, payload: Payload) => {

@@ -29,7 +29,7 @@ const handleCompanyLogin = async (
       message ===
       "None of the pools have an opened connection and failed to open a new one."
     )
-      return "Database Down!";
+      return "Database down!";
   }
 };
 
@@ -59,7 +59,7 @@ const handleEmployeeLogin = async (
       message ===
       "None of the pools have an opened connection and failed to open a new one."
     )
-      return "Database Down!";
+      return "Database down!";
   }
 };
 

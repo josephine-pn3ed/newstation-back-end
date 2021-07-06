@@ -10,7 +10,7 @@ const {
 } = require("../controller/Employee");
 
 route.get(
-  "/employees/:company_id",
+  "/employee/company/:company_id",
   async (req: express.Request, res: express.Response) => {
     const result = await getEmployees(req.params.company_id);
     return res.send(result);
@@ -27,6 +27,7 @@ route.get(
 
 route.post("/employee", async (req: express.Request, res: express.Response) => {
   const result = await insertEmployee(req.body);
+  console.log(result)
   return res.send(result);
 });
 

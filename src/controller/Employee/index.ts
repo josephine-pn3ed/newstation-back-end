@@ -5,11 +5,12 @@ const {
   getEmployees,
   getEmployeeById,
   getEmployeeByEmail,
-  insertEmployee,
+  insertUserEmployee,
   updateEmployee,
   updateEmployeeByStatus,
   deleteEmployee,
 } = require("../../model/Employee");
+const { getAdministratorByEmail } = require("../../model/Administrator");
 const { getCompanyByEmail } = require("../../model/Company");
 
 module.exports = {
@@ -51,13 +52,21 @@ module.exports = {
   
     try {
       const { email_address, first_name, last_name } = payload;
-
       const empId = uuid_v4();
       const checkEmployeeEmail = await getEmployeeByEmail(
         "User",
         email_address
       );
+
       if (checkEmployeeEmail.length) {
+        return "Email address has already been taken.";
+      }
+      const checkAdministratorEmail = await getAdministratorByEmail(
+        "User",
+        email_address
+      );
+
+      if (checkAdministratorEmail.length) {
         return "Email address has already been taken.";
       }
 
@@ -68,8 +77,9 @@ module.exports = {
       if (checkCompanyEmail.length) {
         return "Email address has already been taken.";
       }
+      console.log("data")
 
-      const data = await insertEmployee("Users", {
+      const data = await insertUserEmployee("User", {
         ...payload,
         id: empId,
         role_id: 2,
@@ -83,8 +93,9 @@ module.exports = {
         updated_at: new Date().toISOString(),
         status: "Active",
       });
+
       if (!data.inserted) return "Employee not added!";
-      return { message: "Employee added successfully!" };
+      return "Employee added successfully!";
     } catch (error) {
       const { message } = error;
       if (

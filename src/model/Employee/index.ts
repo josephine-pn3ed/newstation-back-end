@@ -24,7 +24,7 @@ module.exports = {
       .filter({ email_address: email, role_id: role_id, status: "Active" })
       .run();
   },
-  insertEmployee: async (table: Table, payload: Payload) => {
+  insertUserEmployee: async (table: Table, payload: Payload) => {
     return await db.table(table).insert(payload).run();
   },
   updateEmployee: async (table: Table, id: Id, payload: Payload) => {

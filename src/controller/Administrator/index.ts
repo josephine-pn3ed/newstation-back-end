@@ -5,11 +5,12 @@ const {
   getAdministrators,
   getAdministratorById,
   getAdministratorByEmail,
-  insertAdministrator,
+  insertUserAdministrator,
   updateAdministrator,
   updateAdministratorByStatus,
   deleteAdministrator,
 } = require("../../model/Administrator");
+const { getEmployeeByEmail } = require("../../model/Employee");
 const { getCompanyByEmail } = require("../../model/Company");
 
 module.exports = {
@@ -48,27 +49,35 @@ module.exports = {
     if (!first_name) return "First name is empty.";
     if (!last_name) return "Last name is empty.";
     if (!position) return "Position is empty.";
-    
+
     try {
       const { email_address, first_name, last_name } = payload;
       const empId = uuid_v4();
-      const checkEmployeeEmail = await getAdministratorByEmail(
+      const checkEmployeeEmail = await getEmployeeByEmail(
         "User",
         email_address
       );
-      
+
       if (checkEmployeeEmail.length) {
+        return "Email address has already been taken.";
+      }
+      const checkAdministratorEmail = await getAdministratorByEmail(
+        "User",
+        email_address
+      );
+
+      if (checkAdministratorEmail.length) {
         return "Email address has already been taken.";
       }
       const checkCompanyEmail = await getCompanyByEmail(
         "Company",
         email_address
       );
-      
+
       if (checkCompanyEmail.length) {
         return "Email address has already been taken.";
       }
-      const data = await insertAdministrator("User", {
+      const data = await insertUserAdministrator("User", {
         ...payload,
         id: empId,
         role_id: 1,
@@ -82,9 +91,9 @@ module.exports = {
         updated_at: new Date().toISOString(),
         status: "Active",
       });
-
+      
       if (!data.inserted) return "Administrator not added!";
-      return { message: "Administrator added successfully!" };
+      return "Administrator added successfully!";
     } catch (error) {
       const { message } = error;
       if (
@@ -135,7 +144,7 @@ module.exports = {
         status: "Inactive",
         updated_at: new Date().toISOString(),
       });
-      
+
       if (!data.replaced) return "Administrator not deleted!";
       return "Administrator deleted successfully!";
     } catch (error) {
