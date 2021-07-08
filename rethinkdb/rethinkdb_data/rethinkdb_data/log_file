@@ -1,0 +1,19 @@
+2021-07-08T19:15:43.814893906 0.015181s notice: Recursively removing directory /rethinkdb/rethinkdb_data/rethinkdb_data/tmp
+2021-07-08T19:15:43.817846639 0.018135s notice: Initializing directory /rethinkdb/rethinkdb_data/rethinkdb_data
+2021-07-08T19:15:43.817933939 0.018220s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory '/rethinkdb/rethinkdb_data/rethinkdb_data' did not already exist or is empty.)
+2021-07-08T19:15:43.817969568 0.018256s notice: Running rethinkdb 2.4.1~0buster (CLANG 7.0.1 (tags/RELEASE_701/final))...
+2021-07-08T19:15:43.820782954 0.021071s notice: Running on Linux 5.11.0-7614-generic x86_64
+2021-07-08T19:15:43.820857471 0.021144s notice: Loading data from directory /rethinkdb/rethinkdb_data/rethinkdb_data
+2021-07-08T19:15:43.835890859 0.036178s info: Automatically using cache size of 5620 MB
+2021-07-08T19:15:43.836453891 0.036740s notice: Listening for intracluster connections on port 29015
+2021-07-08T19:15:43.837133094 0.037419s notice: Listening for client driver connections on port 28015
+2021-07-08T19:15:43.837194670 0.037481s notice: Listening for administrative HTTP connections on port 8080
+2021-07-08T19:15:43.837196252 0.037482s notice: Listening on cluster addresses: 127.0.0.1, 172.17.0.4
+2021-07-08T19:15:43.837197462 0.037484s notice: Listening on driver addresses: 127.0.0.1, 172.17.0.4
+2021-07-08T19:15:43.837201832 0.037488s notice: Listening on http addresses: 127.0.0.1, 172.17.0.4
+2021-07-08T19:15:43.837204877 0.037491s notice: Server ready, "73fb1f8e2054_04y" a6272167-8749-4f94-852f-d0051f759016
+2021-07-08T19:18:49.611867965 185.812155s notice: Server got SIGINT from pid 0, uid 0; shutting down...
+2021-07-08T19:18:49.612461402 185.812748s notice: Shutting down client connections...
+2021-07-08T19:18:49.619229443 185.819517s notice: All client connections closed.
+2021-07-08T19:18:49.619261608 185.819548s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2021-07-08T19:18:49.619950088 185.820237s notice: Storage engine shut down.
