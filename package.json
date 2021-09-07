@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.dnamicro.net:jmorre/newstation-back-end.git"
+    "url": "https://github.com/josephine-pn3ed/newstation-back-end.git"
   },
   "author": "",
   "license": "ISC",
